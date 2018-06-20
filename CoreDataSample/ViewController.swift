@@ -18,7 +18,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        employeeTableView.isEditing = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,7 +78,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     {
         let showEmpVC = storyboard?.instantiateViewController(withIdentifier: "AddEmpViewController") as! AddEmpViewController
         showEmpVC.isShowEmp = "YES"
+        showEmpVC.oldEmployeeNo = indexPath.row
         self.navigationController?.pushViewController(showEmpVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete
+        {
+            print("Delete")
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let employee = employees[indexPath.row]
+            managedContext.delete(employee)
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not Delete. \(error), \(error.userInfo)")
+            }
+            
+            employees.remove(at: indexPath.row)
+            employeeTableView.deleteRows(at:[indexPath], with: UITableViewRowAnimation.fade)
+        }
     }
 }
 

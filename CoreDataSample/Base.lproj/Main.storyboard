@@ -197,7 +197,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="saveUpdateClicked" destination="5K7-uU-5nL" eventType="touchUpInside" id="OZn-D9-czJ"/>
+                                    <action selector="saveUpdateClickedWithSender:" destination="5K7-uU-5nL" eventType="touchUpInside" id="dHM-2c-hrj"/>
                                 </connections>
                             </button>
                         </subviews>

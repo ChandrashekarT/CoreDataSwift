@@ -53,6 +53,7 @@
 		9C06D9EE20AED9A900A9CDE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C06D9FA20AEDB3700A9CDE8 /* AddEmpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEmpViewController.swift; sourceTree = "<group>"; };
 		9C06D9FC20AEDF7D00A9CDE8 /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
+		9C5EDEE120DA180E003C2656 /* CoreDataSample 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CoreDataSample 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,6 +570,7 @@
 		9C06D9D020AED9A800A9CDE8 /* CoreDataSample.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9C5EDEE120DA180E003C2656 /* CoreDataSample 2.xcdatamodel */,
 				9C06D9D120AED9A800A9CDE8 /* CoreDataSample.xcdatamodel */,
 			);
 			currentVersion = 9C06D9D120AED9A800A9CDE8 /* CoreDataSample.xcdatamodel */;

@@ -15,7 +15,10 @@ class AddEmpViewController: UIViewController {
     @IBOutlet weak var empPhoneNo : UITextField!
     @IBOutlet weak var empRole : UITextField!
     @IBOutlet weak var saveUpdate : UIButton!
+    
     var isShowEmp : String!
+    var oldEmployeeNo: Int!
+    var oldEmployee: NSManagedObject!
     
     var appDelegate:AppDelegate!
 
@@ -31,9 +34,20 @@ class AddEmpViewController: UIViewController {
         {
             self.saveUpdate.setTitle("Upade", for: .normal)
             isShowEmp = "NO"
-            empName.text = "Chandu"
-            empPhoneNo.text = "9874563219"
-            empRole.text = "iOS Developer"
+            
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Epos")
+            do {
+                let employees:[NSManagedObject] = try context.fetch(fetchRequest)
+                oldEmployee = employees[oldEmployeeNo]
+                empName.text = String.init(format: "%@",oldEmployee.value(forKey: "emp_name") as! CVarArg)
+                empPhoneNo.text = String.init(format: "%@",oldEmployee.value(forKey: "emp_phoneNo") as! CVarArg)
+                empRole.text = String.init(format: "%@",oldEmployee.value(forKey: "emp_role") as! CVarArg)
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+            
+            
         }
         else
         {
@@ -63,19 +77,32 @@ class AddEmpViewController: UIViewController {
         empRole.resignFirstResponder()
     }
     
-    @IBAction func saveUpdateClicked()
+    @IBAction func saveUpdateClicked(sender : Any)
     {
+        
         let context = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Epos", in: context)
-        let newUser = NSManagedObject(entity: entity!, insertInto: context)
-        newUser.setValue(empName.text, forKey: "emp_name")
-        newUser.setValue(empPhoneNo.text, forKey: "emp_phoneNo")
-        newUser.setValue(empRole.text, forKey: "emp_role")
+        let saveUpdateBtn = sender as! UIButton
+        if saveUpdateBtn.titleLabel?.text == "Save" {
+            
+            let entity = NSEntityDescription.entity(forEntityName: "Epos", in: context)
+            let newUser = NSManagedObject(entity: entity!, insertInto: context)
+            newUser.setValue(empName.text, forKey: "emp_name")
+            newUser.setValue(empPhoneNo.text, forKey: "emp_phoneNo")
+            newUser.setValue(empRole.text, forKey: "emp_role")
+            
+        }
+        else
+        {
+            oldEmployee.setValue(empName.text, forKey: "emp_name")
+            oldEmployee.setValue(empPhoneNo.text, forKey: "emp_phoneNo")
+            oldEmployee.setValue(empRole.text, forKey: "emp_role")        }
+        
         do {
             try context.save()
         } catch {
             print("Failed saving")
         }
+        
         self.navigationController?.popViewController(animated: true)
     }
 
